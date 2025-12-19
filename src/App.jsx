@@ -11,7 +11,8 @@ function App() {
     { id: "p1", piece: "p", colorr: "w", file: 2, rank: 7 },
     { id: "p2", piece: "p", colorr: "w", file: 3, rank: 7 },
     { id: "p3", piece: "p", colorr: "b", file: 3, rank: 5 },
-    {id:"p4",piece:"p",colorr:"w",file:4,rank:7}
+    {id:"p4",piece:"p",colorr:"w",file:4,rank:7},
+    {id:"k1",piece:"kn",colorr:"w",file:4,rank:5}
   ]);
 
   function checker(file, rank) {
@@ -25,6 +26,7 @@ function App() {
     const rank_clicked = Math.ceil(event.clientY / 75);
 
     if (active === "active") {
+      console.log("active state mai aa chuka hu")
       file_diff = null;
       rankdiff = null;
 
@@ -80,6 +82,19 @@ function App() {
           }
         }
       }
+      if(selectid.piece === "kn"){
+        console.log("knight detected")
+        console.log(file_clicked,rank_clicked)
+        console.log(selectid.file,selectid.rank)
+        const fd=file_clicked-selectid.file
+        const fr=rank_clicked-selectid.rank
+        console.log(fd,fr);
+        if(Math.abs(fd)==2 &&  Math.abs(fr)==1 || Math.abs(fd)==1 && Math.abs(fr)==2){
+          console.log("inside this if ")
+          file_diff=file_clicked
+          rankdiff=rank_clicked
+        }
+      }
 
       if (file_diff !== null && rankdiff !== null) {
         setpiece((prev) =>
@@ -98,6 +113,7 @@ function App() {
         (p) => p.file === file_clicked && p.rank === rank_clicked
       );
       if (piece_exists) {
+        console.log(piece_exists);
         setselectid(piece_exists);
         setactive("active");
       }
